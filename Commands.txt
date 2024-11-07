@@ -1,0 +1,13 @@
+ACTIVATE ENVIRONMENT
+python -m venv tutorial-env
+tutorial-env\Scripts\activate
+
+INSTALL DJANGO
+pip install django
+
+CHECK IF DJANGO IS NOT INSTALLED
+python -m django --version
+
+
+INSTALL WHEEL
+pip install setuptools wheel
