@@ -12,4 +12,6 @@ urlpatterns = [
     path('available/', views.available_books, name='available_books'),  # List available books
     path('borrow/<int:book_id>/', views.borrow_book, name='borrow_book'),  # Borrow a book
     path('return/<int:book_id>/', views.return_book, name='return_book'),  # Return a book
+    path('borrowed_books/', views.borrowed_books, name='borrowed_books'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
