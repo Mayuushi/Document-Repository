@@ -9,15 +9,20 @@ def home(request):
     return HttpResponse("Welcome to the Book System!")
 
 # List all books
+from django.db.models import Q
+
 def book_list(request):
     query = request.GET.get('q')  # Get the search term from the query parameters
     if query:
         books = Book.objects.filter(
-            Q(title__icontains=query) | Q(author__icontains=query)
-        ).order_by('-registered_date')  # Filter books based on title, author, or description
+            Q(title__icontains=query) | Q(author__icontains=query),
+            available=True  # Ensure only available books are shown
+        ).order_by('-registered_date')
     else:
-        books = Book.objects.all().order_by('-registered_date')  # Default: list all books
+        books = Book.objects.filter(available=True).order_by('-registered_date')  # Only available books, no search term
+
     return render(request, 'books/book_list.html', {'books': books, 'query': query})
+
 
 # Register a new book
 def register_book(request):
@@ -77,5 +82,9 @@ def return_book(request, book_id):
             borrow_record.save()
             book.available = True
             book.save()
-            return redirect('available_books')
+            return redirect('borrowed_books')
     return render(request, 'books/return_book.html', {'book': book, 'borrow_record': borrow_record})
+
+def borrowed_books(request):
+    borrowed_books = BorrowRecord.objects.filter(return_date__isnull=True)  # Books currently borrowed
+    return render(request, 'books/borrowed_books.html', {'borrowed_books': borrowed_books})

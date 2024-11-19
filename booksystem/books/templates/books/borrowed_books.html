@@ -176,34 +176,41 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div>
-      <h1>Library</h1>
-      <nav>
-        <ul>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <h1>Library</h1>
+        <nav>
+          <ul>
             <li><a href="{% url 'book_list' %}">Home</a></li>
             <li><a href="#">Search</a></li>
-          <li><a href="{% url 'borrowed_books' %}">My Shelf</a></li>
-          <li><a href="#">Contribute</a></li>
-        </ul>
-      </nav>
-    </div>
-    <footer>
-      <p>About | Support | Terms & Conditions</p>
-    </footer>
-  </aside>
-
-  <!-- Main Content -->
-  <div class="main">
-    <!-- Top Bar -->
-    <header class="topbar">
-      <input type="text" placeholder="Search books...">
-      <div class="actions">
-        <button>Profile</button>
-        <button><a href="{% url 'register_book' %}">Create Book</a></button>
+            <li><a href="{% url 'borrowed_books' %}">My Shelf</a></li>
+            <li><a href="{% url 'register_book' %}">Contribute</a></li>
+          </ul>
+        </nav>
       </div>
-    </header>
+      <footer>
+        <p>About | Support | Terms & Conditions</p>
+      </footer>
+    </aside>
+  
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <form method="GET" action="{% url 'book_list' %}">
+          <input 
+            type="text" 
+            name="q" 
+            placeholder="Search books..." 
+            value="{{ query|default:'' }}" 
+          >
+          <button type="submit">Search</button>
+        </form>
+        <div class="actions">
+          <button>Profile</button>
+        </div>
+      </header>
 
     <!-- Book List -->
     <div class="content">

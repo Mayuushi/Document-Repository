@@ -159,10 +159,10 @@
       <h1>Library</h1>
       <nav>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="{% url 'book_list' %}">Home</a></li>
           <li><a href="#">Search</a></li>
-          <li><a href="#">My Shelf</a></li>
-          <li><a href="#">Contribute</a></li>
+          <li><a href="{% url 'borrowed_books' %}">My Shelf</a></li>
+          <li><a href="{% url 'register_book' %}">Contribute</a></li>
         </ul>
       </nav>
     </div>
