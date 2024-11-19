@@ -15,7 +15,7 @@ def book_list(request):
 # Register a new book
 def register_book(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('book_list')
@@ -27,7 +27,7 @@ def register_book(request):
 def update_book(request, pk):
     book = Book.objects.get(pk=pk)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
             return redirect('book_list')

@@ -1,9 +1,16 @@
-<h1>Register a Book</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
-<a href="{% url 'book_list' %}">Cancel</a>
-
-<a href="{% url 'book_list' %}">Back to Book List</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register a New Book</title>
+</head>
+<body>
+    <h1>Register a New Book</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register Book</button>
+    </form>
+</body>
+</html>

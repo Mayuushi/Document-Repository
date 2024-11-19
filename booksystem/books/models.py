@@ -1,4 +1,3 @@
-# books/models.py
 from django.db import models
 from django.utils import timezone
 
@@ -8,9 +7,12 @@ class Book(models.Model):
     description = models.TextField()
     registered_date = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)  # Tracks book availability
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+  # New field for book image
 
     def __str__(self):
         return self.title
+
 
 class BorrowRecord(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
