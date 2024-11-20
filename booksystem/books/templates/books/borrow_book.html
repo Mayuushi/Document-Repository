@@ -212,12 +212,14 @@
 
     <!-- Book Borrow Form -->
     <div class="content">
+    <div class="book-card">
       <h2>Borrow {{ book.title }}</h2>
       <form method="POST">
         {% csrf_token %}
         <p>You are borrowing this book as <strong>{{ user.username }}</strong>.</p>
         <button type="submit">Borrow</button>
       </form>
+    </div>
     </div>
   </div>
 
