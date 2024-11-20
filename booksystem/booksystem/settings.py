@@ -42,8 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'books',
-
+    'accounts',  # Add this line
 ]
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Keep default backend for admin access
+    'accounts.backends.EmailBackend',  # Add the custom email backend
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -23,6 +23,18 @@ def book_list(request):
 
     return render(request, 'books/book_list.html', {'books': books, 'query': query})
 
+def book_list_user(request):
+    query = request.GET.get('q')  # Get the search term from the query parameters
+    if query:
+        books = Book.objects.filter(
+            Q(title__icontains=query) | Q(author__icontains=query),
+            available=True  # Ensure only available books are shown
+        ).order_by('-registered_date')
+    else:
+        books = Book.objects.filter(available=True).order_by('-registered_date')  # Only available books, no search term
+
+    return render(request, 'books/book_list_user.html', {'books': books, 'query': query})
+
 
 # Register a new book
 def register_book(request):
@@ -72,6 +84,7 @@ def borrow_book(request, book_id):
             return redirect('available_books')
     return render(request, 'books/borrow_book.html', {'book': book})
 
+
 # Return a book
 def return_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
@@ -88,3 +101,7 @@ def return_book(request, book_id):
 def borrowed_books(request):
     borrowed_books = BorrowRecord.objects.filter(return_date__isnull=True)  # Books currently borrowed
     return render(request, 'books/borrowed_books.html', {'borrowed_books': borrowed_books})
+# Borrowed books user
+def borrowed_books_users(request):
+    borrowed_books = BorrowRecord.objects.filter(return_date__isnull=True)  # Books currently borrowed
+    return render(request, 'books/borrowed_books_user.html', {'borrowed_books': borrowed_books})

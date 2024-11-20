@@ -6,9 +6,10 @@ from django.shortcuts import redirect
 
 # Redirect root URL to books/ app
 def home_redirect(request):
-    return redirect('books/')
+    return redirect('accounts/login')
 
 urlpatterns = [
+    path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
     path('books/', include('books.urls')),  # Include books app URLs
     path('', home_redirect),  # Redirect the root URL to /books/
