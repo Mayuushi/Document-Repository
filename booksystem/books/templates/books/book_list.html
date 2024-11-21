@@ -226,11 +226,6 @@
           <p>By {{ book.author }}</p>
           <p>Registered: {{ book.registered_date }}</p>
           <div class="actions">
-            {% if book.available %}
-              <a href="{% url 'borrow_book' book.id %}" class="borrow">Borrow</a>
-            {% else %}
-              <a href="{% url 'return_book' book.id %}" class="return">Return</a>
-            {% endif %}
             <a href="{% url 'update_book' book.id %}" class="edit">Edit</a>
             <a href="{% url 'delete_book' book.id %}" class="delete">Delete</a>
           </div>
