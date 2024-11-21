@@ -35,7 +35,9 @@ def book_list_user(request):
     else:
         books = Book.objects.filter(available=True).order_by('-registered_date')  # Only available books, no search term
 
-    return render(request, 'books/book_list_user.html', {'books': books, 'query': query})
+    # Pass the user to the template
+    return render(request, 'books/book_list_user.html', {'books': books, 'query': query, 'user': request.user})
+
 
 
 # Register a new book
@@ -85,7 +87,7 @@ def borrow_book(request, book_id):
             book.available = False
             book.save()
             return redirect('book_list_user')
-    return render(request, 'books/borrow_book.html', {'book': book})
+    return render(request, 'books/borrow_book.html', {'book': book,'user': request.user})
 
 
 # Return a book
@@ -99,7 +101,7 @@ def return_book(request, book_id):
             book.available = True
             book.save()
             return redirect('borrowed_books_user')
-    return render(request, 'books/return_book.html', {'book': book, 'borrow_record': borrow_record})
+    return render(request, 'books/return_book.html', {'book': book, 'borrow_record': borrow_record,'user': request.user})
 
 def borrowed_books(request):
     borrowed_books = BorrowRecord.objects.filter(return_date__isnull=True)  # Books currently borrowed
@@ -108,4 +110,4 @@ def borrowed_books(request):
 # Borrowed books user
 def borrowed_books_users(request):
     borrowed_books = BorrowRecord.objects.filter(return_date__isnull=True)  # Books currently borrowed
-    return render(request, 'books/borrowed_books_user.html', {'borrowed_books': borrowed_books})
+    return render(request, 'books/borrowed_books_user.html', {'borrowed_books': borrowed_books,'user': request.user})
