@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Book(models.Model):
+    """added"""
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     description = models.TextField()
@@ -16,9 +17,16 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    def is_available(self):
-        """Returns True if the book is available for borrowing."""
-        return self.available
+    @classmethod
+    def get_all_books_with_status(cls):
+        """
+        Retrieve all books with their availability and status.
+        """
+        books = cls.objects.all().values('id', 'title', 'author', 'available')
+        for book in books:
+            book['status'] = 'Available' if book['available'] else 'Borrowed'
+        return books
+
 
 
 class BorrowRecord(models.Model):
