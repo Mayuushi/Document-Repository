@@ -234,16 +234,30 @@
 
     <!-- Book Borrow Form -->
     <div class="content">
-    <div class="book-card">
-      <h2>Borrow {{ book.title }}</h2>
-      <form method="POST">
-        {% csrf_token %}
-        <p>You are borrowing this book as <strong>{{ user.username }}</strong>.</p>
-        <button type="submit">Borrow</button>
-      </form>
-    </div>
+      <div class="book-card">
+          <h2>Borrow {{ book.title }}</h2>
+          {% if book.image %}
+              <img src="{{ book.image.url }}" alt="Book cover of {{ book.title }}">
+          {% endif %}
+          <form method="POST">
+              {% csrf_token %}
+              <p>You are borrowing this book as <strong>{{ user.username }}</strong>.</p>
+              <p>Borrowed books must be returned by <strong>{{ due_date|date:"F j, Y" }}</strong>.</p>
+              <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                  Borrow
+              </button>
+          </form>
+          {% if messages %}
+              <div style="color: red;">
+                  {% for message in messages %}
+                      <p>{{ message }}</p>
+                  {% endfor %}
+              </div>
+          {% endif %}
+      </div>
   </div>
-</div>
+  
+    
 
 
 </body>

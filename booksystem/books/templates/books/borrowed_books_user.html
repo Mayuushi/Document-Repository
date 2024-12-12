@@ -234,28 +234,30 @@
 
     <!-- Book List -->
     <div class="content">
-        <h2>Borrowed Books</h2>
-        <div class="book-list">
+      <h2>Borrowed Books</h2>
+      <div class="book-list">
           {% for record in borrowed_books %}
           <div class="book-card">
-            {% if record.book.image %}
-              <img src="{{ record.book.image.url }}">
-            {% endif %}
-            <h3>{{ record.book.title }}</h3>
-            <p>By {{ record.book.author }}</p>
-            <p>Borrowed by: {{ record.borrower_name }}</p>
-            <p>Borrowed on: {{ record.borrow_date|date:"F j, Y, g:i a" }}</p>
-            <div class="actions">
-              <a href="{% url 'return_book' record.book.id %}" class="return">Return</a>
-            </div>
+              {% if record.book.image %}
+                  <img src="{{ record.book.image.url }}">
+              {% endif %}
+              <h3>{{ record.book.title }}</h3>
+              <p>By {{ record.book.author }}</p>
+              <p>Borrowed by: {{ record.borrower_name }}</p>
+              <p>Borrowed on: {{ record.borrow_date|date:"F j, Y, g:i a" }}</p>
+              <p>Due on: {{ record.due_date|date:"F j, Y, g:i a" }}</p> <!-- Added due date -->
+              <div class="actions">
+                  <a href="{% url 'return_book' record.book.id %}" class="return">Return</a>
+              </div>
           </div>
           {% empty %}
           <div class="book-card">
-            <p>No books are currently borrowed.</p>
+              <p>No books are currently borrowed.</p>
           </div>
           {% endfor %}
-        </div>
       </div>
+  </div>
+  
       
   </div>
 </body>

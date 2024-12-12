@@ -194,64 +194,66 @@
     </header>
 
     <!-- Book List -->
-    <h1>Borrowed Books Admin View</h1>
-<table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th>Book Title</th>
-            <th>Borrower Name</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in borrowed_books %}
-        <tr>
-            <td>{{ record.book.title }}</td>
-            <td>{{ record.borrower_name }}</td>
-            <td>{{ record.borrow_date|date:"F j, Y, g:i a" }}</td>
-            <td>
-                {% if record.return_date %}
-                    {{ record.return_date|date:"F j, Y, g:i a" }}
-                {% else %}
-                    Not yet returned
-                {% endif %}
-            </td>
-            <td>
-                {% if record.return_date %}
-                    Returned
-                {% else %}
-                    Borrowed
-                {% endif %}
-            </td>
-            <td>
-              <form method="POST" style="display: inline-block;">
-                  {% csrf_token %}
-                  <input type="hidden" name="record_id" value="{{ record.id }}">
-                  {% if not record.return_date %}
-                      <!-- Show the "Mark as Returned" button if the book is not returned -->
-                      <button type="submit" name="status" value="returned">Mark as Returned</button>
+      <h1>Borrowed Books Admin View</h1>
+  
+  <!-- Book List -->
+  <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+      <thead>
+          <tr>
+              <th>Book Title</th>
+              <th>Borrower Name</th>
+              <th>Borrow Date</th>
+              <th>Due Date</th> <!-- Added Due Date Column -->
+              <th>Return Date</th>
+              <th>Status</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for record in borrowed_books %}
+          <tr>
+              <td>{{ record.book.title }}</td>
+              <td>{{ record.borrower_name }}</td>
+              <td>{{ record.borrow_date|date:"F j, Y, g:i a" }}</td>
+              <td>{{ record.due_date|date:"F j, Y, g:i a" }}</td> <!-- Added Due Date -->
+              <td>
+                  {% if record.return_date %}
+                      {{ record.return_date|date:"F j, Y, g:i a" }}
+                  {% else %}
+                      Not yet returned
                   {% endif %}
-              </form>
-              <form method="POST" action="{% url 'delete_borrow_record' record.id %}" style="display: inline-block;">
-                  {% csrf_token %}
-                  <!-- Show the "Delete" button -->
-                  <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-              </form>
-          </td>
-          
-          
-          
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="6">No records found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+              </td>
+              <td>
+                  {% if record.return_date %}
+                      Returned
+                  {% else %}
+                      Borrowed
+                  {% endif %}
+              </td>
+              <td>
+                  <form method="POST" style="display: inline-block;">
+                      {% csrf_token %}
+                      <input type="hidden" name="record_id" value="{{ record.id }}">
+                      {% if not record.return_date %}
+                          <!-- Show the "Mark as Returned" button if the book is not returned -->
+                          <button type="submit" name="status" value="returned">Mark as Returned</button>
+                      {% endif %}
+                  </form>
+                  <form method="POST" action="{% url 'delete_borrow_record' record.id %}" style="display: inline-block;">
+                      {% csrf_token %}
+                      <!-- Show the "Delete" button -->
+                      <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                  </form>
+              </td>
+          </tr>
+          {% empty %}
+          <tr>
+              <td colspan="7">No records found.</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  
 
 
 
